@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "Jump.hpp"
 #include "Dice.hpp"
+#include "PlayerFactory.hpp"
 
 class  Gameboard
 {
@@ -19,14 +20,12 @@ private:
     std::map<int, int> jumps;
 public:
     int playerCount;
-     Gameboard(int bSize, int diceCount, int playerCount) : boardSize(bSize), dice(diceCount), playerCount(playerCount){
-        for(int i=0;i<playerCount;i++){
-            std::string name;
-            std::cout<<"Enter player"<<(i+1)<<"name";
-            std::cin>>name;
-            players.emplace_back(name);
-        }
-    }
+     Gameboard(int bSize, int diceCount, int playerCount)
+    : boardSize(bSize), dice(diceCount), playerCount(playerCount) {
+        // Player Factory Design Pattern
+    players = PlayerFactory::createPlayers(playerCount);
+}
+
 
         // add snake or ladder jump
         void addJump(const Jump& jump){
