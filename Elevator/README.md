@@ -25,7 +25,9 @@ This project simulates an elevator control system with multiple elevators, handl
 - Run the executable.
 - The console shows elevator movements, stops, and state changes.
 
-## Future Improvements
-- Add GUI visualization.
-- Improve scheduling with load balancing.
-- Support more complex request types and priorities.
+Output for the example in the main code
+
+![image](https://github.com/user-attachments/assets/9eaa61d4-421a-45e5-9c21-4e4e6b05c71a)
+![image](https://github.com/user-attachments/assets/2e81dcce-cbb4-40f7-8b65-a88b5c6e8f20)
+
+
