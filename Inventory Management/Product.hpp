@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdint>
 #include "ProductType.hpp"
+#include<set>
 
 class Product {
 public:

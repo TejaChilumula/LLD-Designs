@@ -8,7 +8,7 @@
 #include "PricingStrategy.hpp"
 #include "Product.hpp"
 #include "ProductType.hpp"
-#include "ReplenishmentStrategy.hpp"
+#include "ReplenishmentStrategy.hpp",
 
 #include <unordered_map>
 #include <vector>

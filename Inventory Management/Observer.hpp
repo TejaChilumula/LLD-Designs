@@ -1,6 +1,7 @@
 #pragma once
 #include "Item.hpp"
 #include<string>
+#include<set>
 
 class LowStockObserver{
     public:
