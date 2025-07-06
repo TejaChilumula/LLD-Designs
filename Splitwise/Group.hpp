@@ -3,7 +3,9 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <cmath>
+
 #include "Expense.hpp"
+#include "ExpenseSplitStrategy.hpp"
 #include "User.hpp"
 
 class Group {
@@ -23,12 +25,22 @@ class Group {
         return true;
     }
 
-    void addExpense(const Expense& exp, ExpenseSplitType& strat){
+    void addExpense(const Expense& exp, ExpenseSplitStrategy& strat){
         expenses.push_back(exp);
         auto splits = strat.split(exp);
         for(const auto& s: splits){
-            if(s.getUser().getId() == exp.getPayer().getId()) continue;
+            if(s.getUser().getId() == exp.getPaidByUser().getId()) continue;
             balances[s.getUser().getId()] -= s.getAmountOwed();
-            balances[exp.getPayer().getId()]    += s.getAmountOwed();
+            balances[exp.getPaidByUser().getId()]    += s.getAmountOwed();
         }
     }
+
+
+    const std::unordered_map<int, double>& getBalances() const {
+        return balances;
+    }
+
+    const std::vector<User>& getMembers() const {
+        return members;
+    }
+};
