@@ -47,5 +47,6 @@
         "variant": "cpp",
         "vector": "cpp",
         "algorithm": "cpp"
-    }
+    },
+    "autoGitCopilot.enabled": true
 }
