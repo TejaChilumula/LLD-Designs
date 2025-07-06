@@ -1,9 +1,13 @@
+#ifndef EXPENSE_SPLIT_STRATEGY_HPP
+#define EXPENSE_SPLIT_STRATEGY_HPP
+
 #include <string>
 #include <vector>
 #include <stdexcept>
 #include <cmath>
 #include "User.hpp"
 #include "Split.hpp"
+#include "Expense.hpp"
 
 class ExpenseSplitStrategy{
     public:
@@ -29,16 +33,16 @@ class EqualSplitStrategy : public ExpenseSplitStrategy {
 class PercentageSplitStrategy : public ExpenseSplitStrategy{
     public:
         std::vector<Split> split(const Expense& expense) override {
-            doubl total = 0;
-            for(cosnt auto& s : expense.getSplits()) total += s.getSharePercentage();
+            double total = 0;
+            for(const auto& s : expense.getSplits()) total += s.getSharePercentage();
             if (std::fabs(total - 100.0) > 1e-6){
                 throw std::invalid_argument("Total percentage must sum to 100");
             }
 
             std::vector<Split> result;
-            for(const auto& s : expense.getSplit()) {
+            for(const auto& s : expense.getSplits()) {
                 double share = expense.getAmount()*(s.getSharePercentage() / 100.0);
-                result.emplace_back(s.getUser().share);
+                result.emplace_back(s.getUser(),share);
             }
             return result;
         }
@@ -55,5 +59,4 @@ public:
         return expense.getSplits();
     }
 };
-
-#endif // EXPENSE_HPP
+#endif

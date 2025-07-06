@@ -48,5 +48,5 @@
         "vector": "cpp",
         "algorithm": "cpp"
     },
-    "autoGitCopilot.enabled": true
+    "autoGitCopilot.enabled": false
 }

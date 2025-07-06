@@ -9,7 +9,7 @@ public:
 
     int getId() const{ return id;}
     const std::string& getName() const { return name;}
-    const std::string& getEmail() const { return emaill;}
+    const std::string& getEmail() const { return email;}
 
 
 };

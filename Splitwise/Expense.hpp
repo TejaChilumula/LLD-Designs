@@ -41,6 +41,6 @@ class Expense{
     const User& getPaidByUser() const { return paidByUser; }
     ExpenseSplitType getSplitType() const { return splitType; }
     const std::vector<Split>& getSplits() const { return splitDetails; }
-);
+        };
      
 #endif
