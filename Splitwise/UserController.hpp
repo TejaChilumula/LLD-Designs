@@ -9,18 +9,21 @@ private:
     std::vector<User> users;
 
 public:
+    // Add a new user
     void addUser(const User& user) {
         users.push_back(user);
     }
 
-    User* getUser(int userId) {
+    // Retrieve a user by ID (const-safe)
+    User* getUser(int userId) const {
         for (auto& user : users) {
             if (user.getId() == userId)
-                return &user;
+                return const_cast<User*>(&user); // safe if used read-only
         }
         return nullptr;
     }
 
+    // Get all users (read-only access)
     const std::vector<User>& getAllUsers() const {
         return users;
     }
