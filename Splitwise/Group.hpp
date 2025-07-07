@@ -43,4 +43,12 @@ class Group {
     const std::vector<User>& getMembers() const {
         return members;
     }
+
+    const std::vector<Expense>& getExpenses() const {
+    return expenses;
+    }
+
+
+    const std::string& getId() const { return id; }
+    const std::string& getName() const { return name; }
 };

@@ -1,39 +1,49 @@
-#pragma once
-#include "Balance.hpp"
-#include<vector>
-#include<string>
-#include<iostream>
+#ifndef BALANCE_SHEET_CONTROLLER_HPP
+#define BALANCE_SHEET_CONTROLLER_HPP
 
-class BalanceSheetController{
-    public:
-        static std::vector<std::string> getSimplifiedDebts(
-            const std::unordered_map<int, double>& balances){
-                std::vector<std::pair<int,double>> debtors, creditors;
+#include <vector>
+#include <unordered_map>
+#include <cmath>
+#include <algorithm>
+#include "Transaction.hpp"
+#include "BalanceSummary.hpp"
 
-                for(const auto& [id, amount] : balances){
-                    if(std::fabs(amount) < 1e-6) continue;
-                    if(amount < 0) debtors.push_back({id, -amount});
-                    else creditors.push_back({id, amount});
-                    
-                }
+class BalanceSheetController {
+public:
+    static BalanceSummary simplifyBalances(const std::unordered_map<int, double>& balances) {
+        BalanceSummary summary;
+        std::vector<std::pair<int, double>> debtors, creditors;
 
-                size_t i=0, j=0;
-                std::vector<std::string> transactions;
+        for (const auto& [id, amount] : balances) {
+            summary.netBalance[id] = amount;
+            summary.totalExpense += std::fabs(amount);
 
-                while(i<debtors.size() && j < creditors.size()){
-                    double minAmount = std::min(debtors[i].second, creditors[j].second);
-                    transactions.push_back("User " + std::to_string(debtors[i].first) +
-                                   " pays User " + std::to_string(creditors[j].first) +
-                                   " Rs." + std::to_string(minAmount));
+            if (std::fabs(amount) < 1e-6) continue;
+            if (amount < 0) {
+                debtors.emplace_back(id, -amount);
+                summary.totalYouOwe += -amount;
+            } else {
+                creditors.emplace_back(id, amount);
+                summary.totalYouGetBack += amount;
+            }
+        }
 
-                    debtors[i].second -= minAmount;
-                    creditors[j].second -= minAmount;
+        // Simplify debts
+        size_t i = 0, j = 0;
+        while (i < debtors.size() && j < creditors.size()) {
+            double minAmount = std::min(debtors[i].second, creditors[j].second);
 
-                    if (std::fabs(debtors[i].second) < 1e-6) ++i;
-                    if (std::fabs(creditors[j].second) < 1e-6) ++j;
-                }
+            summary.transactions.emplace_back(debtors[i].first, creditors[j].first, minAmount);
 
-                return transactions;
+            debtors[i].second -= minAmount;
+            creditors[j].second -= minAmount;
+
+            if (std::fabs(debtors[i].second) < 1e-6) ++i;
+            if (std::fabs(creditors[j].second) < 1e-6) ++j;
+        }
+
+        return summary;
     }
-               
 };
+
+#endif // BALANCE_SHEET_CONTROLLER_HPP
