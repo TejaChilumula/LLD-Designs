@@ -110,6 +110,9 @@ private:
                 for(int sid = 0; sid < 100; ++sid){
                     auto screen = theatre->getScreen(sid);
                     if(!screen) continue;
+                    
+
+                    for()
                 }
             }
         }
