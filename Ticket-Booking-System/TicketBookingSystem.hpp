@@ -34,3 +34,5 @@ public:
     }
 
     if(cleanerThread.joinable()) cleanerThread.join();
+    }
+
