@@ -18,7 +18,7 @@ class TicketBookingSystem {
     std::unordered_map<int, std::shared_ptr<Theatre>> theatres;
     std::mutex systemMutex;
     bool stopCleaner = false;
-    std::thread cleanerThread;
+    thread cleanerThread;
 
 public:
 
