@@ -48,4 +48,11 @@ void addScreenToTheatre(int theatreId, int screenId){
     }
 }
 
-void addShow(int theatreId, int screenId, int showId, int seat)
+void addShow(int theatreId, int screenId, int showId, int seatCount){
+    lock_guard<mutex> lock(systemMutex);
+    if(theatres.find(theatreId) != theatres.end()){
+        auto screen = theatres[theatreId]->getScreen(screenId);
+        if(screen)
+            screen->addShow(showId, seatCount);
+    }
+}
