@@ -23,5 +23,6 @@ public:
     BookingManager bookingManager;
 
     TicketBookingSystem(){
-        cleanerThread = thread(&TicketBookingSystem::startCleaner)
+        cleanerThread = thread(&TicketBookingSystem::startCleaner, this);
+        
     }
