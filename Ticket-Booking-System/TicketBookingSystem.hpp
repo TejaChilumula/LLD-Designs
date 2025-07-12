@@ -48,4 +48,4 @@ void addScreenToTheatre(int theatreId, int screenId){
     }
 }
 
-q
+void addShow(int theatreId, int screenId, int showId, int seat)
