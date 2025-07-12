@@ -32,3 +32,5 @@ public:
         lock_guard<mutex> lock(systemMutex);
         stopCleaner = true;
     }
+
+    if(cleanerThread.joinable()) cleanerThread.join();
