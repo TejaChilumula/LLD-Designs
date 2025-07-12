@@ -47,3 +47,5 @@ void addScreenToTheatre(int theatreId, int screenId){
         theatres[theatreId]->addScreen(screenId);
     }
 }
+
+q
