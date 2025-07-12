@@ -118,7 +118,7 @@ private:
 
                         for(int i=0;i<100;++i){
                             auto seat = show->getSeat(i);
-                            
+                            if(seat) seat->checkHoldExpired();
                         }
                     }
                 }
