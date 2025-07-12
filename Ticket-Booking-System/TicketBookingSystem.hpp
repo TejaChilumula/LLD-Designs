@@ -89,4 +89,16 @@ shared_ptr<Booking> confirmBooking(int userId, int theatreId, int screenId, int 
 }
 
 private:
-    shared_ptr<Show> getShow(int theatreId, int screen)
+    std::shared_ptr<Show> getShow(int theatreId, int screenId, int showId) {
+        std::lock_guard<std::mutex> lock(systemMutex);
+        if (theatres.find(theatreId) != theatres.end()) {
+            auto screen = theatres[theatreId]->getScreen(screenId);
+            if (screen) return screen->getShow(showId);
+        }
+        return nullptr;
+    }
+
+
+    void startCleaner(){
+        
+    }
