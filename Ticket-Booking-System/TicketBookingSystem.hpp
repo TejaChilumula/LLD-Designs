@@ -102,6 +102,15 @@ private:
     void startCleaner(){
         while(true){
 
-            
+            this_thread::sleep_for(chrono::seconds(5));
+            lock_guard<mutex> lock(systemMutex);
+            if(stopCleaner) break;
+
+            for(auto& [tid, theatre] : theatres){
+                for(int sid = 0; sid < 100; ++sid){
+                    auto screen = theatre->getScreen(sid);
+                    if(!screen) continue;
+                }
+            }
         }
     }
