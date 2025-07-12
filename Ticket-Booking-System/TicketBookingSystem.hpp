@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <chrono>
 
+using namespace std;
+
 class TicketBookingSystem {
     std::unordered_map<int, std::shared_ptr<Theatre>> theatres;
     std::mutex systemMutex;
@@ -24,5 +26,8 @@ public:
 
     TicketBookingSystem(){
         cleanerThread = thread(&TicketBookingSystem::startCleaner, this);
-        
+    }
+
+    ~TicketBookingSystem(){
+        lock
     }
