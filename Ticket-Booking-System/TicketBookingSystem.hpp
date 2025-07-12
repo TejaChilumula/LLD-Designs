@@ -61,4 +61,6 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
     std::shared_ptr<Show> show = getShow(theatreId, screenId, showId);
     if (!show) return false;
 
-    
+    auto seats = show->getSeats(seatIds);
+    sort(seats.begin(), seats.end(), [](const auto&a, 
+    const &b)
