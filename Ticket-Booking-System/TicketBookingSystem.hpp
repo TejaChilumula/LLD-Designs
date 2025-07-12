@@ -76,4 +76,5 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
         return true;
     }
 
-    
+
+shared_ptr<Booking> confirmBooking(int userId, int theatreId, )
