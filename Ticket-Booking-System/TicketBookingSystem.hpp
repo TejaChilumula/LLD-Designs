@@ -43,5 +43,7 @@ void addTheatre(int theatreId) {
 
 void addScreenToTheatre(int theatreId, int screenId){
     lock_guard<mutex> lock(systemMutex);
-    if(theatres.find(theatreId) != thea)
+    if(theatres.find(theatreId) != theatres.end()){
+        theatres[theatreId]->addScreen(screenId);
+    }
 }
