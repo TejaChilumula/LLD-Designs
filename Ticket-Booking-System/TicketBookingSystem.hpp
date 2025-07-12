@@ -36,3 +36,12 @@ public:
     if(cleanerThread.joinable()) cleanerThread.join();
     }
 
+void addTheatre(int theatreId) {
+    lock_guard<mutex> lock(systemMutex);
+    theatres[theatreId] = make_shared<Theatre>(theatreId);
+}
+
+void addScreenToTheatre(int theatreId, int screenId){
+    lock_guard<mutex> lock(systemMutex);
+    if(theatres.find(theatreId) != thea)
+}
