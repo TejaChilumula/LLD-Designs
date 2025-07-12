@@ -78,3 +78,4 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
 
 shared_ptr<Booking> confirmBooking(int userId, int theatreId, int screenId, int showId, const std::vector<int>& seatIds) {
         std::shared_ptr<Show> show = getShow(theatreId, screenId, showId);
+        
