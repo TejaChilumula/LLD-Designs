@@ -29,7 +29,7 @@ public:
     }
 
     ~TicketBookingSystem(){
-        lock_guard<mutex> lock(systemMutex);
+    { lock_guard<mutex> lock(systemMutex);
         stopCleaner = true;
     }
 
