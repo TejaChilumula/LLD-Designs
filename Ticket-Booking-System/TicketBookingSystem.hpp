@@ -86,4 +86,7 @@ shared_ptr<Booking> confirmBooking(int userId, int theatreId, int screenId, int 
         }
 
         return bookingManager.createBooking(userId, theatreId, screenId, showId, seatIds );
-        
+}
+
+private:
+    shared_ptr<Show> getShow(int theatreId, int screen)
