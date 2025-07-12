@@ -68,9 +68,12 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
 
     for(auto& seat : seats){
         // This is for the multiple seats booking, if any of the seat booked, then we make all the
-        // seats available and 
+        // seats available and cancel the order.
         if(!seat->tryHold()){
             for(auto& s : seats) s->cancelHoldorBooking();
             return false;
         }
+        return true;
     }
+
+    
