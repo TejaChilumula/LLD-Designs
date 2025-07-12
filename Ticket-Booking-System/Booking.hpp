@@ -19,7 +19,7 @@ public:
     int _screenId, int _showId, const vector<int>& _seats):
     bookingId(_bookingId), userId(_userId),
     theatreId(_theatreId),
-    screenId(_screenId), showId(showId),
+    screenId(_screenId), showId(_showId),
     seatIds(_seats), bookingTime(chrono::system_clock::now()){
         qrToken = generateToken();
     };
@@ -29,10 +29,13 @@ public:
         +to_string(std::chrono::system_clock::now().time_since_epoch().count());
     }
 
-    int getUserId() const { return userId;}
-    string getQR() const { return qrToken; }
-    int getBookingId() const { return bookingId;}
-    vector<int> getSeatIds() const { return seatIds;}
+    int getBookingId() const { return bookingId; }
+    int getUserId() const { return userId; }
+    int getTheatreId() const { return theatreId; }
+    int getScreenId() const { return screenId; }
+    int getShowId() const { return showId; }  // ✅ This line fixes your error
+    const std::vector<int>& getSeatIds() const { return seatIds; }
+    const std::string& getQR() const { return qrToken; }
 
     void print() const;
 };

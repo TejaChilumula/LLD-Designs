@@ -1,22 +1,23 @@
 #pragma once
 #include "Screen.hpp"
-#include<unordered_map>
+#include <unordered_map>
+#include <memory>
 
-class Theatre{
+class Theatre {
     int theatreId;
-    unordered_map<int, shared_ptr<Screen>> screens;
+    std::unordered_map<int, std::shared_ptr<Screen>> screens;
 
 public:
-    Theatre(int id): theatreId(id) {}
+    Theatre(int id) : theatreId(id) {} // ✅ required for make_shared<Theatre>(int)
 
-    void addScreen(int screenId){
-        screens[screenId] = make_shared<Screen>(screenId);
+    void addScreen(int screenId) {
+        screens[screenId] = std::make_shared<Screen>(screenId);
     }
 
-    shared_ptr<Screen> getScreen(int screenId){
-        if(screens.find(screenId) != screens.end()) return screens[screenId];
+    std::shared_ptr<Screen> getScreen(int screenId) {
+        if (screens.count(screenId)) return screens[screenId];
         return nullptr;
     }
 
-    int getId() const{ return theatreId;}
+    int getId() const { return theatreId; }
 };

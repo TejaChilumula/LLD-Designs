@@ -1,53 +1,68 @@
 #pragma once
-#include<mutex>
-#include<chrono>
-using namespace std;
+#include <mutex>
+#include <chrono>
+#include <iostream>
 
-class Seat{
+class Seat {
     int seatId;
     bool isBooked = false;
     bool isHeld = false;
-    chrono::steady_clock::time_point holdStartTime;
-    mutex seatMutex;
-    int holdDurationSec = 10;
+    int heldByUserId = -1;
+    std::chrono::steady_clock::time_point holdStartTime;
+    std::mutex seatMutex;
+    const int holdDurationSec = 60;
 
 public:
     Seat(int id) : seatId(id) {}
 
-    bool tryHold(){
-        lock_guard<mutex> loc(seatMutex);
-        if(isBooked || isHeld) return false;
+    bool tryHold(int userId) {
+        std::lock_guard<std::mutex> lock(seatMutex);
+        if (isBooked || isHeld) return false;
         isHeld = true;
-        holdStartTime = chrono::steady_clock::now();
+        heldByUserId = userId;
+        holdStartTime = std::chrono::steady_clock::now();
+        std::cout << "[Seat " << seatId << "] held by User " << userId << "\n";
         return true;
     }
 
-    bool confirmBooking(){
-        lock_guard<mutex> loc(seatMutex);
-
-        if(!isHeld) return false;
+    bool confirmBooking(int userId) {
+        std::lock_guard<std::mutex> lock(seatMutex);
+        if (!isHeld || heldByUserId != userId) {
+            std::cout << "[Seat " << seatId << "] confirm failed (held=" << isHeld << ", heldBy=" << heldByUserId << ", requester=" << userId << ")\n";
+            return false;
+        }
         isHeld = false;
         isBooked = true;
+        heldByUserId = -1;
+        std::cout << "[Seat " << seatId << "] booked by User " << userId << "\n";
         return true;
     }
 
-    bool cancelHoldorBooking(){
-        lock_guard<mutex> lock(seatMutex);
-        if(isHeld) { isHeld = false; return true;}
-        if(isBooked){isBooked = false; return true;}
-        return false;
+    bool cancelHoldorBooking(int userId){
+    std::lock_guard<std::mutex> lock(seatMutex);
+    if (isHeld && heldByUserId == userId) {
+        std::cout << "[Seat " << seatId << "] hold cancelled (user=" << userId << ")\n";
+        isHeld = false;
+        heldByUserId = -1;
+        return true;
     }
+    return false;
+}
 
-    bool checkHoldExpired(){
-        lock_guard<mutex> lock(seatMutex);
-        if(isHeld && chrono::steady_clock::now() - holdStartTime > std::chrono::seconds(holdDurationSec)){
+
+    bool checkHoldExpired() {
+        std::lock_guard<std::mutex> lock(seatMutex);
+        if (isHeld && std::chrono::steady_clock::now() - holdStartTime > std::chrono::seconds(holdDurationSec)) {
+            std::cout << "[Seat " << seatId << "] hold expired (user=" << heldByUserId << ")\n";
             isHeld = false;
+            heldByUserId = -1;
             return true;
         }
         return false;
     }
 
-    int getId() const { return seatId;}
-    bool booked() const {return isBooked;}
-    bool held() const { return isHeld;}
+    int getId() const { return seatId; }
+    bool booked() const { return isBooked; }
+    bool held() const { return isHeld; }
+    int getHeldBy() const { return heldByUserId; }
 };

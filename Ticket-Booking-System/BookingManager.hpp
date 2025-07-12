@@ -19,13 +19,29 @@ public:
             return booking;
         }
 
-    vector<shared_ptr<Booking>> getBookingForUser(int userId) {
-        return userBookings[userId];
+    vector<std::shared_ptr<Booking>> getBookingsForUser(int userId) {
+        return userBookings[userId];  // returns empty if user has no bookings
     }
     
     
     shared_ptr<Booking> getBookingByQR(const string& qr){
         return qrMap.count(qr) ? qrMap[qr] : nullptr;
+    }
+    
+    void printBookingsForUser(int userId) {
+        if (userBookings.find(userId) == userBookings.end()) {
+            std::cout << "No bookings found for user " << userId << "\n";
+            return;
+        }
+        for (const auto& b : userBookings[userId]) {
+            std::cout << "Booking ID: " << b->getBookingId()
+                    << ", Theatre: " << b->getTheatreId()
+                    << ", Screen: " << b->getScreenId()
+                    << ", Show: " << b->getShowId()
+                    << ", Seats: ";
+            for (int sid : b->getSeatIds()) std::cout << sid << " ";
+            std::cout << "\n";
+        }
     }
 
 

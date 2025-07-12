@@ -8,7 +8,7 @@ private:
     string name;
 
 public:
-    User(int _userid, string& _name ) : userId(_userid), name(_name) {};
+    User(int _userid, const string& _name ) : userId(_userid), name(_name) {};
     
     int getId() const { return userId;}
     string getName() const {return name;}

@@ -1,22 +1,24 @@
 #pragma once
 #include "Show.hpp"
-#include<unordered_map>
+#include <unordered_map>
+#include <memory>
 
 class Screen {
     int screenId;
-    unordered_map<int, shared_ptr<Show>> shows;
+    std::unordered_map<int, std::shared_ptr<Show>> shows;
 
 public:
+    // ✅ Make sure this constructor is defined, not just declared
     Screen(int id) : screenId(id) {}
 
-    void addShow(int showId, int seatCount){
-        shows[showId] = make_shared<Show>(showId, seatCount);
+    void addShow(int showId, int seatCount) {
+        shows[showId] = std::make_shared<Show>(showId, seatCount);
     }
 
-    shared_ptr<Show> getShow(int showId){
-        if(shows.find(showId) != shows.end()) return shows[showId];
+    std::shared_ptr<Show> getShow(int showId) {
+        if (shows.find(showId) != shows.end()) return shows[showId];
         return nullptr;
     }
 
-    int getId() const { return screenId;}
+    int getId() const { return screenId; }
 };
