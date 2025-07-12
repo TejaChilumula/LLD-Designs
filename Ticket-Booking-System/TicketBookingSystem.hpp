@@ -112,7 +112,15 @@ private:
                     if(!screen) continue;
                     
 
-                    for()
+                    for(int shid = 0; shid < 100; ++shid){
+                        auto show = screen->getShow(shid);
+                        if(!show) continue;
+
+                        for(int i=0;i<100;++i){
+                            auto seat = show->getSeat(i);
+                            
+                        }
+                    }
                 }
             }
         }
