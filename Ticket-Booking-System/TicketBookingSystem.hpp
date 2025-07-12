@@ -65,3 +65,9 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
     sort(seats.begin(), seats.end(), [](const auto&a, const auto&b){
         return a->getId < b->getId();
     });
+
+    for(auto& seat : seats){
+        if(!seat->tryHold()){
+            for(auto& s : seats) s->co
+        }
+    }
