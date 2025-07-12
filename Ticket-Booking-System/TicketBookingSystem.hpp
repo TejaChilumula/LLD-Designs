@@ -11,3 +11,17 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+
+class TicketBookingSystem {
+    std::unordered_map<int, std::shared_ptr<Theatre>> theatres;
+    std::mutex systemMutex;
+    bool stopCleaner = false;
+    std::thread cleanerThread;
+
+public:
+
+    BookingManager bookingManager;
+
+    TicketBookingSystem(){
+        cleanerThread = thread(&TicketBookingSystem::startCleaner)
+    }
