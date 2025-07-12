@@ -62,7 +62,6 @@ bool holdSeats(int theatreId, int screenId, int showId, const std::vector<int>& 
     if (!show) return false;
 
     auto seats = show->getSeats(seatIds);
-    sort(seats.begin(), seats.end(), [](const auto&a, const &b){
+    sort(seats.begin(), seats.end(), [](const auto&a, const auto&b){
         return a->getId < b->getId();
     });
-    
