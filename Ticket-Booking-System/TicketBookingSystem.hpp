@@ -85,4 +85,4 @@ shared_ptr<Booking> confirmBooking(int userId, int theatreId, int screenId, int 
             if(!seat->confirmBooking()) return nullptr;
         }
 
-        
+        return bookingManager.createBooking(userId, theatreId, screenId, )
