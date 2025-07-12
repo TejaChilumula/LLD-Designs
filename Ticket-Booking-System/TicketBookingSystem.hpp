@@ -57,4 +57,4 @@ void addShow(int theatreId, int screenId, int showId, int seatCount){
     }
 }
 
-bool holdSeats(int )
+bool holdSeats(int theatreId, )
