@@ -56,3 +56,5 @@ void addShow(int theatreId, int screenId, int showId, int seatCount){
             screen->addShow(showId, seatCount);
     }
 }
+
+bool holdSeats(int )
