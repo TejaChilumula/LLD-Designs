@@ -30,8 +30,27 @@ public:
 
     void dispenseItem(int shelfId){
         if(!isAvailable(shelfId)){
-            throw runtime_error("Item not available to dispense")
+            throw runtime_error("Item not available to dispense");
         }
+        shelves[shelfId].devremntQuantity();
+    }
+
+    void refillShelf(int shelfId, int quantity){
+        if(shelves.find(shelfId) == shelves.end()){
+            throw runtime_error("Invalid shelf ID");
+        }
+        shelves[shelfId].refill(quantity);
+    }
+
+        // Thread safety ...... // No copying just use the pointers
+    vector<const ItemShelf*> getAllShelves() const {
+        vector<const ItemShelf*> result;
+        result.reserve(shelves.size());
+
+        for(const auto& pair : shelves){
+            result.push_back(&pair.second);
+        }
+        return result;
     }
 
 };
