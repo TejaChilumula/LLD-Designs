@@ -19,8 +19,10 @@ class ChangeDispenser {
             unordered_map<int, int> result;
             auto available = coinInventory.getAllCoins();
 
-            
+            // get the accepted denominations
             vector<int> denominations = Coin::getSupportedDenominations();
+            //sort them high to low, so that
+                // - we can give the max high denominations cash so that we can save more change
             sort(denominations.rbegin(), denominations.rend());
 
             for(int denom : denominations){
@@ -29,7 +31,7 @@ class ChangeDispenser {
 
                 if(usable > 0){
                     result[denom] = usable;
-                    amount -= denom*usable;
+                    amount -= denom*usable;  // remove that denom * num of notes can give of the denom
                 }
             }
 
