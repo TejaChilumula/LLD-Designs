@@ -9,6 +9,9 @@ class ItemShelf{
         int quantity;
     
     public:
+
+        ItemShelf() : shelfId(-1), item(Item(0, "", 0.0, ItemType::OTHER)), quantity(0) {}
+        
         ItemShelf(int _shelfId, const Item& _item, int _quantity) :
          shelfId(_shelfId), item(_item), quantity(_quantity) {}
 
@@ -20,7 +23,7 @@ class ItemShelf{
 
          bool isEmpty() const { return quantity ==0;}
 
-         void devremntQuantity(){
+         void decrementQuantity(){
             if(quantity >0 ) quantity--;
          }
 

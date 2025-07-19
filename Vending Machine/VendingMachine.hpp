@@ -91,7 +91,7 @@ public:
         if (!change.empty()) {
             std::cout << "Change returned:\n";
             for (const auto& [denom, count] : change) {
-                std::cout << "₹" << denom << " x " << count << "\n";
+                std::cout << "$" << denom << " x " << count << "\n";
             }
         }
 
@@ -121,5 +121,12 @@ public:
         MachineState getState() const {
             return state;
         }
+
+    CoinInventory& getCoinInventory() {
+    return coinInventory;}
+
+    ChangeDispenser& getChangeDispenser() {
+    return changeDispenser;
+}
 
 };

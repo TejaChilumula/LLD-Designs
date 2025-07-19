@@ -32,17 +32,19 @@ public:
     }
     }
 
-    void addCoins(int denominaitons, int count){
-        if(coins[denominaitons] < count) 
+    void addCoins(int denomination, int count) {
+        if (!Coin::isValidDenomination(denomination)) {
             throw invalid_argument("Invalid denomination");
-        coins[denominaitons] += count;
+        }
+        coins[denomination] += count;
     }
+
 
     void removeCoins(int _denomination, int _count){
         if(coins[_denomination] < _count){
             throw std::runtime_error("Not enough coins of denominations");
         }
-        coins[_denomination] += _count;
+        coins[_denomination] -= _count;
     }
 
     void removeCoins(int _denomination){

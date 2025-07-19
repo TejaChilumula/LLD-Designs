@@ -6,13 +6,11 @@
 #include "ItemShelf.hpp"
 
 class Inventory {
-
 private:
-    unordered_map<int, ItemShelf> shelves;
+    std::unordered_map<int, ItemShelf> shelves;
 
 public:
-
-    void addShelf(const ItemShelf& shelf){
+    void addShelf(const ItemShelf& shelf) {
         shelves[shelf.getShelfId()] = shelf;
     }
 
@@ -22,35 +20,38 @@ public:
     }
 
     const Item& getItem(int shelfId) const {
-        if(!isAvailable(shelfId)){
-            throw runtime_error("Item not available");
+        auto it = shelves.find(shelfId);
+        if (it == shelves.end()) {
+            throw std::runtime_error("Invalid shelf ID");
         }
-        return shelves.at(shelfId).getItem();
+        return it->second.getItem();
     }
 
-    void dispenseItem(int shelfId){
-        if(!isAvailable(shelfId)){
-            throw runtime_error("Item not available to dispense");
+    void dispenseItem(int shelfId) {
+        auto it = shelves.find(shelfId);
+        if (it == shelves.end()) {
+            throw std::runtime_error("Invalid shelf ID");
         }
-        shelves[shelfId].devremntQuantity();
+        if (it->second.isEmpty()) {
+            throw std::runtime_error("Item is already out of stock");
+        }
+        it->second.decrementQuantity();
     }
 
-    void refillShelf(int shelfId, int quantity){
-        if(shelves.find(shelfId) == shelves.end()){
-            throw runtime_error("Invalid shelf ID");
+    void refillShelf(int shelfId, int quantity) {
+        auto it = shelves.find(shelfId);
+        if (it == shelves.end()) {
+            throw std::runtime_error("Invalid shelf ID");
         }
-        shelves[shelfId].refill(quantity);
+        it->second.refill(quantity);
     }
 
-        // Thread safety ...... // No copying just use the pointers
-    vector<const ItemShelf*> getAllShelves() const {
-        vector<const ItemShelf*> result;
+    std::vector<ItemShelf> getAllShelves() const {
+        std::vector<ItemShelf> result;
         result.reserve(shelves.size());
-
-        for(const auto& pair : shelves){
-            result.push_back(&pair.second);
+        for (const auto& pair : shelves) {
+            result.push_back(pair.second); // Copies are OK here
         }
         return result;
     }
-
 };
